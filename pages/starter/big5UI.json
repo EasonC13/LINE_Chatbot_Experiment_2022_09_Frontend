@@ -1,0 +1,42 @@
+{
+  "1": {
+    "ui:widget": "RadioWidget",
+    "ui:enumNames": ["1", "2", "3", "4", "5"]
+  },
+  "2": {
+    "ui:widget": "RadioWidget",
+    "ui:enumNames": ["1", "2", "3", "4", "5"]
+  },
+  "3": {
+    "ui:widget": "RadioWidget",
+    "ui:enumNames": ["1", "2", "3", "4", "5"]
+  },
+  "4": {
+    "ui:widget": "RadioWidget",
+    "ui:enumNames": ["1", "2", "3", "4", "5"]
+  },
+  "5": {
+    "ui:widget": "RadioWidget",
+    "ui:enumNames": ["1", "2", "3", "4", "5"]
+  },
+  "6": {
+    "ui:widget": "RadioWidget",
+    "ui:enumNames": ["1", "2", "3", "4", "5"]
+  },
+  "7": {
+    "ui:widget": "RadioWidget",
+    "ui:enumNames": ["1", "2", "3", "4", "5"]
+  },
+  "8": {
+    "ui:widget": "RadioWidget",
+    "ui:enumNames": ["1", "2", "3", "4", "5"]
+  },
+  "9": {
+    "ui:widget": "RadioWidget",
+    "ui:enumNames": ["1", "2", "3", "4", "5"]
+  },
+  "10": {
+    "ui:widget": "RadioWidget",
+    "ui:enumNames": ["1", "2", "3", "4", "5"]
+  }
+}

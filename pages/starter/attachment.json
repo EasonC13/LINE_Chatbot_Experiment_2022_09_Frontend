@@ -1,0 +1,13 @@
+{
+  "required": [1],
+  "type": "object",
+  "title": "",
+  "properties": {
+    "1": {
+      "type": "number",
+      "title": "請選擇最符合您的敘述",
+      "enum": [1, 2, 3],
+      "enumNames": ["1", "2", "3AAA"]
+    }
+  }
+}

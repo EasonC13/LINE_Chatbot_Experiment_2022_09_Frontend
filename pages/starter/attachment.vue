@@ -61,7 +61,7 @@ export default {
       if (this.selected == 0) {
         alert("請選擇一個最適合的描述後再點選繼續");
       } else {
-        let res = await this.$axios.$post("/api/v1/attachment-style", {
+        let res = await this.$axios.$post("/api/v1/starter/attachment-style", {
           userId: this.$route.query.id,
           style: this.selected,
         });

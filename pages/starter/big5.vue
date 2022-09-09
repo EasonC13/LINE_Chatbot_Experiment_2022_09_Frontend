@@ -63,7 +63,7 @@ export default {
         alert(`題目 ${unfinish} 尚未完成`);
       } else {
         // POST
-        let res = await this.$axios.$post("/api/v1/big5", {
+        let res = await this.$axios.$post("/api/v1/starter/big5", {
           userId: this.$route.query.id,
           big5: JSON.stringify(this.formData),
         });

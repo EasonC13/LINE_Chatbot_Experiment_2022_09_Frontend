@@ -32,7 +32,7 @@ export default {
       });
     },
     async next() {
-      await this.$axios.$post("/api/v1/accept-term-of-test", {
+      await this.$axios.$post("/api/v1/starter/accept-term-of-test", {
         userId: this.$route.query.id,
         accept: true,
       });

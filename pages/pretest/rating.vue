@@ -62,7 +62,7 @@ export default {
   },
   async beforeMount() {
     this.bots = await this.$axios.$get(
-      `/api/v1/bots?condition=${this.condition}`,
+      `/api/v1/pretest/bots?condition=${this.condition}`,
       {
         userId: this.$route.query.id,
         style: this.selected,

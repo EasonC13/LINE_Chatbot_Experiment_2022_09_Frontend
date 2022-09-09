@@ -32,13 +32,10 @@ export default {
       });
     },
     async next() {
-      await this.$axios.$post(
-        "https://exp1.eason.best/api/v1/accept-term-of-test",
-        {
-          userId: this.$route.query.id,
-          accept: true,
-        }
-      );
+      await this.$axios.$post("/api/v1/accept-term-of-test", {
+        userId: this.$route.query.id,
+        accept: true,
+      });
       this.$router.push({
         path: "/starter/big5",
         query: { ...this.$route.query },

@@ -39,30 +39,18 @@ export default {
       schema: require("./big5.json"),
     };
   },
+  beforeMount() {
+    this.initForm();
+  },
   mounted() {
     console.log("this.$route", this.$route);
   },
   methods: {
-    initSchema() {
-      let newUISchema = {};
-      let newSchema = {};
-      this.questions.forEach((x, i) => {
-        console.log(i, x);
-        newSchema[i + 1] = {
-          type: "number",
-          title: x,
-          enum: [1, 2, 3, 4, 5],
-          enumNames: ["1", "2", "3", "4", "5"],
-        };
-        newUISchema[i + 1] = {
-          "ui:widget": "RadioWidget",
-          "ui:enumNames": ["1", "2", "3", "4", "5"],
-        };
-      });
-
-      console.log("newUISchema", newUISchema);
-      this.schema.properties = newSchema;
-      this.uiSchema = newUISchema;
+    initForm() {
+      // for (let index = 1; index < 11; index++) {
+      //   this.formData[index] = 4;
+      // }
+      // this.formData = { ...this.formData };
     },
     async submit() {
       let unfinish = [];
@@ -75,7 +63,15 @@ export default {
         alert(`題目 ${unfinish} 尚未完成`);
       } else {
         // POST
-        this.next();
+        let res = await this.$axios.$post("/api/v1/big5", {
+          userId: this.$route.query.id,
+          big5: JSON.stringify(this.formData),
+        });
+        if (res.acknowledged) {
+          this.next();
+        } else {
+          alert("發生未知錯誤，請稍後重試或聯絡管理員");
+        }
       }
     },
     next() {

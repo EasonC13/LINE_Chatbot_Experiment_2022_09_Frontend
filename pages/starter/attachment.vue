@@ -61,8 +61,15 @@ export default {
       if (this.selected == 0) {
         alert("請選擇一個最適合的描述後再點選繼續");
       } else {
-        // POST
-        this.next();
+        let res = await this.$axios.$post("/api/v1/attachment-style", {
+          userId: this.$route.query.id,
+          style: this.selected,
+        });
+        if (res.acknowledged) {
+          this.next();
+        } else {
+          alert("發生未知錯誤，請稍後重試或聯絡管理員");
+        }
       }
     },
     next() {

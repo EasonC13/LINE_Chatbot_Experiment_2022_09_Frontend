@@ -22,7 +22,7 @@ export default {
   mounted() {},
   methods: {
     next() {
-      window.close();
+      window.location = "https://line.me/R/oaMessage/@956unykg/?";();
     },
     back() {
       this.$router.push({

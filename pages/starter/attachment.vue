@@ -1,5 +1,5 @@
 <template lang="">
-  <div class="mx-2">
+  <div class="mx-2 mt-3">
     <h3>親密關係人個特質單選</h3>
     <p>請在以下敘述中，選出最能夠代表您在親密關係中的個人經驗。</p>
     <div

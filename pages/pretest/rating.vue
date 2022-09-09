@@ -100,14 +100,14 @@ export default {
           console.log(this.submitted);
           if(!this.submitted){
             this.submitted = true
-              await this.$axios.$post("/api/v1/ratings", {
+              await this.$axios.$post("/api/v1/pretest/ratings", {
               userId: this.$route.query.id,
               condition: this.condition,
               status: this.$route.query.test,
               ratings: JSON.stringify(this.ratings)
             });
             this.$router.push({
-              path: "/starter/finish",
+              path: "/pretest/finish",
               query: { ...this.$route.query },
             });
           }

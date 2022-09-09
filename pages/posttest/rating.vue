@@ -62,7 +62,7 @@ export default {
   },
   async beforeMount() {
     this.bots = await this.$axios.$get(
-      `/api/v1/bots?condition=${this.condition}`,
+      `/api/v1/pretest/bots?condition=${this.condition}`,
       {
         userId: this.$route.query.id,
         style: this.selected,
@@ -100,7 +100,7 @@ export default {
           console.log(this.submitted);
           if(!this.submitted){
             this.submitted = true
-              await this.$axios.$post("/api/v1/ratings", {
+              await this.$axios.$post("/api/v1/pretest/ratings", {
               userId: this.$route.query.id,
               condition: this.condition,
               status: this.$route.query.test,

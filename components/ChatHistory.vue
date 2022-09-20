@@ -10,6 +10,7 @@
       >
         查看___的聊天記錄
       </button>
+      {{ history }}
     </div>
 
     <!-- Modal -->
@@ -44,19 +45,29 @@
                         data-mdb-perfect-scrollbar="true"
                         style="position: relative; height: 70vh"
                       >
-                        <chatOwnMessage
-                          :text="text"
-                          :image="image"
-                        ></chatOwnMessage>
-
-                        <chatTargetBot
-                          :text="text"
-                          :image="image"
-                        ></chatTargetBot>
-                        <chatOtherBot
-                          :text="text"
-                          :image="image"
-                        ></chatOtherBot>
+                        <div v-for="(item, index) in history" :key="index">
+                          <chatOwnMessage
+                            :text="item.input_text"
+                            :image="''"
+                          ></chatOwnMessage>
+                          <div
+                            v-for="(item_, index_) in item.responses"
+                            :key="index_"
+                          >
+                            <chatTargetBot
+                              :text="item_.response_text"
+                              :image="item_.bot_img"
+                              :name="item_.bot_name"
+                              v-if="current_bot_id == item_.bot_id"
+                            ></chatTargetBot>
+                            <chatOtherBot
+                              :text="item_.response_text"
+                              :image="item_.bot_img"
+                              :name="item_.bot_name"
+                              v-else="current_bot_id == item_.bot_id"
+                            ></chatOtherBot>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -80,12 +91,23 @@
 </template>
 <script>
 export default {
+  props: ["userId", "condition", "current_bot_id"],
   data() {
     return {
       text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid velit pariatur vel rerum earum molestias nam cumque, dignissimos itaque voluptate deleniti laboriosam! Eius quia doloremque excepturi aliquid et placeat quibusdam.",
       image:
         "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp",
+      history: [],
     };
+  },
+  async mounted() {
+    let condition = this.condition.split("_");
+    condition.pop();
+    condition = condition.join("_");
+    let res = await this.$axios.$get(
+      `/api/v1/posttest/chat_history?userId=${this.userId}&condition=${condition}`
+    );
+    this.history = res.chats;
   },
 };
 </script>

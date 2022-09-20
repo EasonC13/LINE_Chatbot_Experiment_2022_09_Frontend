@@ -11,7 +11,11 @@
         <button @click="next" class="btn btn-primary mt-3">開始</button>
       </div>
     </div>
-    <ChatHistory></ChatHistory>
+    <ChatHistory
+      :condition="$route.query.test"
+      :userId="$route.query.id"
+      :current_bot_id="'DogeC'"
+    ></ChatHistory>
   </div>
 </template>
 <script>

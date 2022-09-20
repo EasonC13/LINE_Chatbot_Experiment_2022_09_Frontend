@@ -57,7 +57,7 @@ export default {
   computed: {
     condition() {
       let [a, b, _] = this.$route.query.test.split("_");
-      return `${a}_${b}`;
+      return `${b}`;
     },
   },
   async beforeMount() {

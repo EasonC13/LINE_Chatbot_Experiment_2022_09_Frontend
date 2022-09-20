@@ -58,12 +58,6 @@
       >
         完成
       </button>
-      <p
-        class="text-secondary mt-3"
-        v-if="!(selected != 0 && textarea.length != 0)"
-      >
-        需先選擇好感度並輸入感覺，才能繼續
-      </p>
     </div>
   </div>
   <div v-else>
@@ -89,7 +83,7 @@ export default {
       bots: [],
       selected: 0,
       range: [1, 2, 3, 4, 5, 6, 7],
-      ratings: {},
+      ratings: [],
       submitted: false,
       lock: false,
       textarea: "",
@@ -119,31 +113,25 @@ export default {
       }
     },
     previous() {
-      this.save_current();
-      let item = this.ratings[this.current_index - 1];
+      this.ratings.pop();
       this.current_index--;
-      this.loading = true;
       this.reinit();
-      this.selected = item.rating;
-      this.textarea = item.comment;
-    },
-    save_current() {
-      this.ratings[this.current_index] = {
-        name: this.bots[this.current_index].name,
-        img: this.bots[this.current_index].img_url,
-        rating: this.selected,
-        comment: this.textarea,
-      };
     },
     async submit() {
       if (this.lock) {
         return 0;
       } else {
         this.lock = true;
-        if (this.selected == 0 || this.textarea.length == 0) {
-          alert("請選擇一個最適合的好感度並輸入感覺，再點選繼續");
+        if (this.selected == 0) {
+          alert("請選擇一個最適合的好感度，再點選繼續");
         } else {
-          this.save_current();
+          this.ratings.push({
+            index: this.current_index,
+            name: this.bots[this.current_index].name,
+            img: this.bots[this.current_index].img_url,
+            rating: this.selected,
+            comment: this.textarea,
+          });
           if (this.current_index + 1 == this.bots.length) {
             console.log(this.submitted);
             if (!this.submitted) {
@@ -154,7 +142,10 @@ export default {
                 status: this.$route.query.test,
                 ratings: JSON.stringify(this.ratings),
               });
-              this.next();
+              this.$router.push({
+                path: "/pretest/finish",
+                query: { ...this.$route.query },
+              });
             }
           } else {
             this.current_index++;
@@ -175,7 +166,7 @@ export default {
     },
     next() {
       this.$router.push({
-        path: "/posttest/ueq_intro",
+        path: "/starter/finish",
         query: { ...this.$route.query },
       });
     },

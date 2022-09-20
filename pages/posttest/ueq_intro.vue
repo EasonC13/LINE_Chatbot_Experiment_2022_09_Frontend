@@ -1,7 +1,7 @@
 <template lang="">
   <div class="container mt-5">
     <div class="">
-      <h3>後測</h3>
+      <h3>UEQ 測驗</h3>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus quas
         eligendi non illum ad quos provident mollitia deleniti sequi numquam,
@@ -11,6 +11,7 @@
         <button @click="next" class="btn btn-primary mt-3">開始</button>
       </div>
     </div>
+    <ChatHistory></ChatHistory>
   </div>
 </template>
 <script>
@@ -22,7 +23,7 @@ export default {
   methods: {
     async next() {
       this.$router.push({
-        path: "/posttest/rating",
+        path: "/posttest/ueq",
         query: { ...this.$route.query },
       });
     },

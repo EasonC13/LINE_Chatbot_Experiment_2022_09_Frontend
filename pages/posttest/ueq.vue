@@ -1,36 +1,44 @@
 <template lang="">
-  <div class="mx-2" v-if="bots.length != 0 && !loading">
-    <h3>好感度評估前測</h3>
-    <p>關於此聊天對象</p>
-    <p>名字：{{ bots[current_index].name }}</p>
-    <p>圖片：<img :src="bots[current_index].img_url" /></p>
-    <div class="mb-3">
-      <p>請問您的好感分數？</p>
+  <div class="" v-if="bots.length != 0 && !loading">
+    <h3 class="mx-2">UEQ量表</h3>
+    <div class="mx-2 sticky-top bg-white pb-1">
+      <p>關於此聊天對象</p>
+      <p>
+        <img :src="bots[current_index].img_url" class="mx-3" />{{
+          bots[current_index].name
+        }}
+      </p>
+
+      <ChatHistory
+        :condition="$route.query.test"
+        :userId="$route.query.id"
+        :current_bot_id="bots[current_index].id"
+      ></ChatHistory>
+      <p class="mt-3">根據聊天記錄，請問您對他的感覺？</p>
+    </div>
+    <div class="my-3" v-for="(question, q_num) in ueq" :key="q_num">
+      <div class="mx-2 clearfix mb-0">
+        <span class="float-left">{{ question.left }}</span>
+        <span class="float-right">{{ question.right }}</span>
+        <div class="text-center"></div>
+      </div>
+
       <div class="text-center">
         <button
           class="btn"
           type="button"
           :class="{
-            'btn-primary': selected == index + 1,
-            'btn-outline-dark': !(selected == index + 1),
+            'btn-primary': selected[q_num] == index + 1,
+            'btn-outline-dark': !(selected[q_num] == index + 1),
+            'px-0': true,
           }"
-          @click="select(index + 1)"
-          v-for="(text, index) in range"
+          style="width: 9vw"
+          @click="select(q_num, num)"
+          v-for="(num, index) in range"
           :key="index"
         >
-          {{ text }}
+          {{ num }}
         </button>
-      </div>
-    </div>
-    <div>
-      <p class="mb-0">請問您跟他聊天的感覺？</p>
-      <p>（形容詞，開放式回應，字數不限）</p>
-      <div class="input-group">
-        <textarea
-          v-model="textarea"
-          class="form-control"
-          aria-label="With textarea"
-        ></textarea>
       </div>
     </div>
 
@@ -46,7 +54,7 @@
         @click="submit"
         class="btn btn-primary"
         v-if="current_index + 1 != bots.length"
-        :disabled="!(selected != 0 && textarea.length != 0)"
+        :disabled="!form_finish"
       >
         下一位
       </button>
@@ -54,7 +62,7 @@
         @click="submit"
         class="btn btn-primary"
         v-else
-        :disabled="!(selected != 0 && textarea.length != 0)"
+        :disabled="!form_finish"
       >
         完成
       </button>
@@ -68,7 +76,7 @@
 //  使用
 import VueForm from "@lljj/vue-json-schema-form";
 import { init } from "events";
-
+import ueq from "./ueq";
 export default {
   name: "Demo",
   emits: ["submit"],
@@ -81,18 +89,23 @@ export default {
       loading: false,
       current_index: 0,
       bots: [],
-      selected: 0,
-      range: [1, 2, 3, 4, 5, 6, 7],
-      ratings: [],
+      selected: Array(ueq.length).fill(1),
+      range: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      ueq: ueq,
+      current_UEQ: [],
+      all_ueq: {},
       submitted: false,
       lock: false,
-      textarea: "",
     };
   },
   computed: {
     condition() {
       let [a, b, _] = this.$route.query.test.split("_");
       return `${a}_${b}`;
+    },
+    form_finish() {
+      let res = this.selected.filter((x) => x == 0);
+      return res.length == 0;
     },
   },
   async beforeMount() {
@@ -105,17 +118,24 @@ export default {
     );
   },
   methods: {
-    select(i) {
-      if (i == this.selected) {
-        this.selected = 0;
-      } else {
-        this.selected = i;
-      }
+    select(q_num, i) {
+      this.selected[q_num] = i;
+      this.selected = [...this.selected];
     },
     previous() {
-      this.ratings.pop();
+      this.save_current();
+      let item = this.all_ueq[this.current_index - 1];
       this.current_index--;
       this.reinit();
+      this.selected = item.rating;
+    },
+    save_current() {
+      this.all_ueq[this.current_index] = {
+        id: this.bots[this.current_index].id,
+        name: this.bots[this.current_index].name,
+        img: this.bots[this.current_index].img_url,
+        rating: this.selected,
+      };
     },
     async submit() {
       if (this.lock) {
@@ -123,42 +143,36 @@ export default {
       } else {
         this.lock = true;
         if (this.selected == 0) {
-          alert("請選擇一個最適合的好感度，再點選繼續");
+          alert("請選擇一個最適合的好感度並輸入感覺，再點選繼續");
         } else {
-          this.ratings.push({
-            index: this.current_index,
-            name: this.bots[this.current_index].name,
-            img: this.bots[this.current_index].img_url,
-            rating: this.selected,
-            comment: this.textarea,
-          });
+          this.save_current();
           if (this.current_index + 1 == this.bots.length) {
-            console.log(this.submitted);
             if (!this.submitted) {
               this.submitted = true;
-              await this.$axios.$post("/api/v1/pretest/ratings", {
+              await this.$axios.$post("/api/v1/posttest/ueq", {
                 userId: this.$route.query.id,
                 condition: this.condition,
                 status: this.$route.query.test,
-                ratings: JSON.stringify(this.ratings),
+                all_ueq: JSON.stringify(this.all_ueq),
               });
-              this.$router.push({
-                path: "/pretest/finish",
-                query: { ...this.$route.query },
-              });
+              this.next();
             }
           } else {
             this.current_index++;
             this.reinit();
+            let item = this.all_ueq[this.current_index];
+            if (item) {
+              this.selected = item.rating;
+              this.textarea = item.comment;
+            }
           }
         }
         this.lock = false;
       }
     },
     reinit() {
-      this.selected = 0;
+      this.selected = Array(this.ueq.length).fill(1);
       this.loading = true;
-      this.textarea = "";
       let vue = this;
       setTimeout(() => {
         vue.loading = false;
@@ -166,7 +180,7 @@ export default {
     },
     next() {
       this.$router.push({
-        path: "/starter/finish",
+        path: "/posttest/ueq_intro",
         query: { ...this.$route.query },
       });
     },
@@ -181,8 +195,8 @@ export default {
 }
 img {
   position: relative;
-  width: 200px;
-  height: 200px;
+  width: 3em;
+  height: 3em;
   overflow: hidden;
   border-radius: 50%;
 }

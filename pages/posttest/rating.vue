@@ -104,10 +104,6 @@ export default {
   async beforeMount() {
     this.bots = await this.$axios.$get(
       `/api/v1/posttest/bots?condition=${this.condition}`
-      // {
-      //   userId: this.$route.query.id,
-      //   style: this.selected,
-      // }
     );
   },
   methods: {
@@ -128,6 +124,7 @@ export default {
     },
     save_current() {
       this.ratings[this.current_index] = {
+        id: this.bots[this.current_index].id,
         name: this.bots[this.current_index].name,
         img: this.bots[this.current_index].img_url,
         rating: this.selected,

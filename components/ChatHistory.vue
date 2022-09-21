@@ -1,5 +1,5 @@
 <template lang="">
-  <div>
+  <div class="clearfix">
     <!-- Button trigger modal -->
     <div class="">
       <button
@@ -8,9 +8,8 @@
         data-toggle="modal"
         data-target="#exampleModal"
       >
-        查看___的聊天記錄
+        查看 {{ current_bot.bot_name }} 的聊天記錄
       </button>
-      {{ history }}
     </div>
 
     <!-- Modal -->
@@ -24,7 +23,9 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">聊天記錄回顧</h5>
+            <p class="h6 modal-title" id="exampleModalLabel">
+              與 {{ current_bot.bot_name }} 的聊天回顧
+            </p>
             <button
               type="button"
               class="close"
@@ -100,6 +101,18 @@ export default {
       history: [],
     };
   },
+  computed: {
+    current_bot() {
+      if (this.history.length == 0) {
+        return "___";
+      } else {
+        let current = this.history[0].responses.filter(
+          (x) => x.bot_id == this.current_bot_id
+        );
+        return current[0];
+      }
+    },
+  },
   async mounted() {
     let condition = this.condition.split("_");
     condition.pop();
@@ -126,5 +139,10 @@ export default {
   content: "";
   flex: 1;
   height: 1px;
+}
+</style>
+<style>
+.modal-backdrop {
+  z-index: -1;
 }
 </style>

@@ -87,6 +87,7 @@ export default {
     },
     save_current() {
       this.ratings[this.current_index] = {
+        id: this.bots[this.current_index].id,
         name: this.bots[this.current_index].name,
         img: this.bots[this.current_index].img_url,
         rating: this.selected,

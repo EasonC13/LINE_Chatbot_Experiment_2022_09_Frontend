@@ -1,6 +1,6 @@
 <template lang="">
   <div class="mx-2" v-if="bots.length != 0 && !loading">
-    <h3>好感度評估前測</h3>
+    <h3>好感度評估後測</h3>
     <p>關於此聊天對象</p>
     <p>名字：{{ bots[current_index].name }}</p>
     <p>圖片：<img :src="bots[current_index].img_url" /></p>
@@ -122,7 +122,6 @@ export default {
       this.save_current();
       let item = this.ratings[this.current_index - 1];
       this.current_index--;
-      this.loading = true;
       this.reinit();
       this.selected = item.rating;
       this.textarea = item.comment;
@@ -145,7 +144,6 @@ export default {
         } else {
           this.save_current();
           if (this.current_index + 1 == this.bots.length) {
-            console.log(this.submitted);
             if (!this.submitted) {
               this.submitted = true;
               await this.$axios.$post("/api/v1/posttest/ratings", {
@@ -159,6 +157,11 @@ export default {
           } else {
             this.current_index++;
             this.reinit();
+            let item = this.ratings[this.current_index];
+            if (item) {
+              this.selected = item.rating;
+              this.textarea = item.comment;
+            }
           }
         }
         this.lock = false;

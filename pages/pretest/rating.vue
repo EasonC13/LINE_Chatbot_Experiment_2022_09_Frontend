@@ -49,7 +49,7 @@ export default {
       bots: [],
       selected: 0,
       range: [1, 2, 3, 4, 5, 6, 7],
-      ratings: [],
+      ratings: {},
       submitted: false,
       lock: false
     };
@@ -77,10 +77,21 @@ export default {
         this.selected = i;
       }
     },
-    previous(){
-      this.ratings.pop()
-      this.current_index --
-      this.reinit()
+    previous() {
+      this.save_current();
+      let item = this.ratings[this.current_index - 1];
+      this.current_index--;
+      this.reinit();
+      this.selected = item.rating;
+      this.textarea = item.comment;
+    },
+    save_current() {
+      this.ratings[this.current_index] = {
+        name: this.bots[this.current_index].name,
+        img: this.bots[this.current_index].img_url,
+        rating: this.selected,
+        comment: this.textarea,
+      };
     },
     async submit() {
       if(this.lock){
@@ -90,14 +101,8 @@ export default {
         if (this.selected == 0) {
         alert("請選擇一個最適合的好感度，再點選繼續");
       } else {
-        this.ratings.push({
-          index: this.current_index,
-          name: this.bots[this.current_index].name,
-          img: this.bots[this.current_index].img_url,
-          rating: this.selected,
-        })
+        this.save_current();
         if(this.current_index+1 == this.bots.length){
-          console.log(this.submitted);
           if(!this.submitted){
             this.submitted = true
               await this.$axios.$post("/api/v1/pretest/ratings", {
@@ -114,7 +119,12 @@ export default {
 
         }else{
           this.current_index++;
-          this.reinit()
+          this.reinit();
+          let item = this.ratings[this.current_index];
+          if (item) {
+            this.selected = item.rating;
+            this.textarea = item.comment;
+          }
         }
       }
       this.lock = false

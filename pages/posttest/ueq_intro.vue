@@ -22,7 +22,7 @@ export default {
   methods: {
     async next() {
       this.$router.push({
-        path: "/posttest/ueq",
+        path: "/posttest/ueq_cuq",
         query: { ...this.$route.query },
       });
     },

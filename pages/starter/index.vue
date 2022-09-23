@@ -32,6 +32,13 @@ export default {
       });
     },
     async next() {
+      let res = await this.$axios.$get(
+        `/api/v1/general/isfinish?userId=${this.$route.query.id}&condition=${this.$route.query.test}`
+      );
+      if (res.isfinish) {
+        alert("您已經完成初始測驗，請直接關閉視窗回到聊天機器人繼續實驗");
+        return;
+      }
       await this.$axios.$post("/api/v1/starter/accept-term-of-test", {
         userId: this.$route.query.id,
         accept: true,

@@ -21,6 +21,13 @@ export default {
   mounted() {},
   methods: {
     async next() {
+      let res = await this.$axios.$get(
+        `/api/v1/general/isfinish?userId=${this.$route.query.id}&condition=${this.$route.query.test}`
+      );
+      if (res.isfinish) {
+        alert("您已經完成後測，請直接關閉視窗回到聊天機器人繼續實驗");
+        return;
+      }
       this.$router.push({
         path: "/posttest/rating",
         query: { ...this.$route.query },

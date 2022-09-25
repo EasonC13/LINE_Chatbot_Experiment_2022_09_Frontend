@@ -119,12 +119,13 @@ export default {
       await this.$axios.$post("/api/v1/final/tam", {
         userId: this.$route.query.id,
         tam: JSON.stringify(this.selected),
-        other_options: textarea,
+        other_options: this.textarea,
       });
+      this.next();
     },
     next() {
       this.$router.push({
-        path: "/posttest/finish",
+        path: "/final/final",
         query: { ...this.$route.query },
       });
     },

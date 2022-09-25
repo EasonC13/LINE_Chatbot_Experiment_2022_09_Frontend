@@ -80,6 +80,7 @@ export default {
       ],
       submitted: false,
       lock: false,
+      textarea: "",
     };
   },
   computed: {
@@ -98,7 +99,9 @@ export default {
       await this.$axios.$post("/api/v1/final/sus", {
         userId: this.$route.query.id,
         sus: JSON.stringify(this.selected),
+        comment: this.textarea,
       });
+      this.next();
     },
     next() {
       this.$router.push({

@@ -223,7 +223,7 @@ export default {
     },
     next() {
       this.$router.push({
-        path: "/posttest/ueq_intro",
+        path: "/posttest/finish",
         query: { ...this.$route.query },
       });
     },

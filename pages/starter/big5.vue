@@ -1,6 +1,7 @@
 <template lang="">
   <div class="mx-2">
-    <h3>Big5 人格測驗</h3>
+    <h3>人格測驗</h3>
+    <p>請選擇符合您個性的描述</p>
     <VueForm
       v-model="formData"
       :schema="schema"

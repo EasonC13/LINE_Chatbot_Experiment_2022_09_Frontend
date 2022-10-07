@@ -1,7 +1,7 @@
 <template lang="">
   <div class="container mt-5">
     <div class="">
-      <h3>UEQ 測驗</h3>
+      <h3>聊天體驗測驗</h3>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus quas
         eligendi non illum ad quos provident mollitia deleniti sequi numquam,

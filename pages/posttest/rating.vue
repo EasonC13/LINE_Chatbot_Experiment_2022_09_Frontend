@@ -178,7 +178,7 @@ export default {
     reinit() {
       this.selected = 0;
       this.loading = true;
-      this.textarea = "";
+      this.textarea = "因為太麻煩而跳過";
       let vue = this;
       setTimeout(() => {
         vue.loading = false;

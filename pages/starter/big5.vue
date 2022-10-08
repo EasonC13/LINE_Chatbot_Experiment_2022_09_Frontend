@@ -1,17 +1,41 @@
 <template lang="">
-  <div class="mx-2">
-    <h3>人格測驗</h3>
-    <p>請選擇符合您個性的描述</p>
-    <VueForm
-      v-model="formData"
-      :schema="schema"
-      :uiSchema="uiSchema"
-      :formFooter="formFooter"
-      ref="Form"
+  <div class="">
+    <div class="mx-2 mt-3">
+      <h3>人格測驗</h3>
+      <p>請選擇符合您個性的描述</p>
+    </div>
+    <div
+      class="my-3 mx-2"
+      v-for="(question, q_num) in big5"
+      :key="`big5_${q_num}`"
     >
-    </VueForm>
+      <p class="h5">{{ question }}</p>
+      <div class="clearfix mb-0">
+        <span class="float-left text-secondary">非常不同意</span>
+        <span class="float-right text-secondary">非常同意</span>
+        <div class="text-center"></div>
+      </div>
+
+      <div class="text-center">
+        <button
+          class="btn"
+          type="button"
+          :class="{
+            'btn-primary': selected[q_num] == index + 1,
+            'btn-outline-dark': !(selected[q_num] == index + 1),
+            'px-0': true,
+          }"
+          style="width: 12vw"
+          @click="select(q_num, num)"
+          v-for="(num, index) in range"
+          :key="`${index}`"
+        >
+          {{ num }}
+        </button>
+      </div>
+    </div>
     <div class="text-center mb-2">
-      <button @click="submit" class="btn btn-primary">
+      <button @click="submit" class="btn btn-primary" :disabled="!form_finish">
         已完成，進入下一個測驗
       </button>
     </div>
@@ -20,59 +44,52 @@
 <script>
 //  使用
 import VueForm from "@lljj/vue-json-schema-form";
-
+import big5 from "./big5";
 export default {
   name: "Demo",
   emits: ["submit"],
   components: {
     VueForm,
   },
-  watch: {
-    formData() {
-      console.log(this.formData);
-    },
-  },
+  watch: {},
   data() {
     return {
-      formFooter: { show: false },
-      formData: {},
-      uiSchema: require("./big5UI.json"),
-      schema: require("./big5.json"),
+      loading: false,
+      current_index: 0,
+      bots: [],
+      selected: Array(big5.length).fill(1),
+      range: [1, 2, 3, 4, 5],
+      big5: big5,
+      submitted: false,
+      lock: false,
     };
   },
-  beforeMount() {
-    this.initForm();
-  },
-  mounted() {
-    console.log("this.$route", this.$route);
+  computed: {
+    form_finish() {
+      let res = this.selected.filter((x) => x == 0);
+      return res.length == 0;
+    },
   },
   methods: {
-    initForm() {
-      // for (let index = 1; index < 11; index++) {
-      //   this.formData[index] = 4;
-      // }
-      // this.formData = { ...this.formData };
+    select(q_num, i) {
+      this.selected[q_num] = i;
+      this.selected = [...this.selected];
     },
     async submit() {
-      let unfinish = [];
-      this.schema.required.forEach((i) => {
-        if (this.formData[i] == undefined) {
-          unfinish.push(i);
-        }
-      });
-      if (unfinish.length > 0) {
-        alert(`題目 ${unfinish} 尚未完成`);
+      if (this.lock) {
+        return 0;
       } else {
-        // POST
+        this.lock = true;
         let res = await this.$axios.$post("/api/v1/starter/big5", {
           userId: this.$route.query.id,
-          big5: JSON.stringify(this.formData),
+          big5: JSON.stringify(this.selected),
         });
         if (res.acknowledged) {
           this.next();
         } else {
           alert("發生未知錯誤，請稍後重試或聯絡管理員");
         }
+        this.lock = false;
       }
     },
     next() {
@@ -84,4 +101,21 @@ export default {
   },
 };
 </script>
-<style lang=""></style>
+<style scoped>
+.selected {
+  border-color: blue;
+  color: blue;
+  /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06); */
+}
+img {
+  position: relative;
+  width: 3em;
+  height: 3em;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.circular--portrait img {
+  width: 100%;
+  height: auto;
+}
+</style>

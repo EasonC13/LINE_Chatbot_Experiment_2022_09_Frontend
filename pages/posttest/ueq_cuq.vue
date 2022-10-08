@@ -184,31 +184,28 @@ export default {
         return 0;
       } else {
         this.lock = true;
-        if (this.selected == 0) {
-          alert("請選擇一個最適合的好感度並輸入感覺，再點選繼續");
+        this.save_current();
+        if (this.current_index + 1 == this.bots.length) {
+          if (!this.submitted) {
+            this.submitted = true;
+            await this.$axios.$post("/api/v1/posttest/questionnaire", {
+              userId: this.$route.query.id,
+              condition: this.condition,
+              status: this.$route.query.test,
+              all_rating: JSON.stringify(this.all_rating),
+            });
+            this.next();
+          }
         } else {
-          this.save_current();
-          if (this.current_index + 1 == this.bots.length) {
-            if (!this.submitted) {
-              this.submitted = true;
-              await this.$axios.$post("/api/v1/posttest/questionnaire", {
-                userId: this.$route.query.id,
-                condition: this.condition,
-                status: this.$route.query.test,
-                all_rating: JSON.stringify(this.all_rating),
-              });
-              this.next();
-            }
-          } else {
-            this.current_index++;
-            this.reinit();
-            let item = this.all_rating[this.current_index];
-            if (item) {
-              this.selected = item.ueq_rating;
-              this.cuq_selected = item.cuq_rating;
-            }
+          this.current_index++;
+          this.reinit();
+          let item = this.all_rating[this.current_index];
+          if (item) {
+            this.selected = item.ueq_rating;
+            this.cuq_selected = item.cuq_rating;
           }
         }
+
         this.lock = false;
       }
     },

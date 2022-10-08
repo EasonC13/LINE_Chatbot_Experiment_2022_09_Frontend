@@ -18,7 +18,7 @@
     </div>
 
     <div class="text-center my-2">
-      <button @click="submit" class="btn btn-primary">
+      <button @click="submit" class="btn btn-primary" :disabled="selected == 0">
         已完成，進入下一個測驗
       </button>
     </div>

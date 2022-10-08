@@ -49,7 +49,7 @@
                         <div v-for="(item, index) in history" :key="index">
                           <chatOwnMessage
                             :text="`@${item.reply_to} ${item.input_text}`"
-                            :image｀="''"
+                            :image="''"
                             v-if="item.reply_to"
                           ></chatOwnMessage>
                           <chatOwnMessage

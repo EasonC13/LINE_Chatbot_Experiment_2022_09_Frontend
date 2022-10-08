@@ -1,9 +1,20 @@
 <template lang="">
   <div class="mx-2" v-if="bots.length != 0 && !loading">
     <h3>好感度評估後測</h3>
-    <p>關於此聊天對象</p>
-    <p>名字：{{ bots[current_index].name }}</p>
-    <p>圖片：<img :src="bots[current_index].img_url" /></p>
+    <div class="pb-4">
+      <p>關於此聊天對象</p>
+      <p>
+        <img :src="bots[current_index].img_url" class="mx-3 w-25 h-25" />{{
+          bots[current_index].name
+        }}
+      </p>
+
+      <ChatHistory
+        :condition="$route.query.test"
+        :userId="$route.query.id"
+        :current_bot_id="bots[current_index].id"
+      ></ChatHistory>
+    </div>
     <div class="mb-3">
       <p>請問您的好感分數？</p>
       <div class="text-center">
@@ -22,9 +33,9 @@
         </button>
       </div>
     </div>
-    <div>
+    <!-- <div>
       <p class="mb-0">請問您跟他聊天的感覺？</p>
-      <p>（形容詞，開放式回應，字數不限）</p>
+      <p>（形容詞，使用空白間隔，開放式回應，字數不限）</p>
       <div class="input-group">
         <textarea
           v-model="textarea"
@@ -32,7 +43,7 @@
           aria-label="With textarea"
         ></textarea>
       </div>
-    </div>
+    </div> -->
 
     <div class="text-center my-2">
       <button
@@ -92,7 +103,7 @@ export default {
       ratings: {},
       submitted: false,
       lock: false,
-      textarea: "",
+      textarea: "因為擔心受試者太累所以取消",
     };
   },
   computed: {
@@ -190,8 +201,8 @@ export default {
 }
 img {
   position: relative;
-  width: 200px;
-  height: 200px;
+  width: 3em;
+  height: 3em;
   overflow: hidden;
   border-radius: 50%;
 }

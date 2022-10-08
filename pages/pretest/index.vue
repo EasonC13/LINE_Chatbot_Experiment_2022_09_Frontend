@@ -2,11 +2,7 @@
   <div class="container mt-5">
     <div class="">
       <h3>前測</h3>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus quas
-        eligendi non illum ad quos provident mollitia deleniti sequi numquam,
-        velit eum magnam doloribus molestiae aut quam in suscipit amet!
-      </p>
+      <p>在此請您紀錄您對此聊天對象的名字與頭像的感覺</p>
       <div class="text-center">
         <button @click="next" class="btn btn-primary mt-3">開始</button>
       </div>

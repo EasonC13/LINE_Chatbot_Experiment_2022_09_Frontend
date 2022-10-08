@@ -1,5 +1,5 @@
 <template lang="">
-  <div class="mx-2">
+  <div class="mx-2 mt-3">
     <h3>個人資料收集</h3>
     <form>
       <div class="form-group">
@@ -53,10 +53,10 @@
           v-model="bank_account"
         />
       </div>
+      <p>*請確認銀行帳號正確無誤，這樣受試者報酬才能順利匯入</p>
+      <br></br>
       <div class="form-group">
-        <label for="exampleFormControlTextarea1"
-          >對於本次實驗想說的話（心得回饋）</label
-        >
+        <label for="exampleFormControlTextarea1">任何想說的話、備註</label>
         <textarea
           class="form-control"
           id="exampleFormControlTextarea1"

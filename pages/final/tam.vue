@@ -1,10 +1,15 @@
 <template lang="">
-  <div class="">
-    <h3 class="mx-2">陪聊 AI 的接受度調查表</h3>
+  <div class="mx-2 mt-3">
+    <h3 class="">陪聊 AI 的接受度調查表</h3>
+    <p class="text-secondary">距離實驗結束還有兩份問卷</p>
+    <p>
+      由於陪聊 AI 服務尚未上線，請您想像如果今天有一個能陪您聊天且個性化的 AI
+      聊天對象、聊天群組，您會想用他嗎？
+    </p>
 
-    <p class="mt-1 mx-2 h6">對於下列敘述，請問您的同意程度？</p>
+    <p class="mt-1 h6">對於下列敘述，請問您的同意程度？</p>
     <div
-      class="my-3 mx-2"
+      class="my-3"
       v-for="(question, q_num) in questions"
       :key="`cuq_${q_num}`"
     >
@@ -35,7 +40,8 @@
     </div>
     <div class="mx-2">
       <p class="mb-0 mt-3">
-        請問除排解孤獨、娛樂等，您認為 AI 陪伴聊天還能達到什麼目的？
+        請問除排解孤獨、獲得社交、紓解壓力、娛樂等，您認為 AI
+        陪伴聊天還能達到什麼目的？
       </p>
       <p>（非必填，字數不限，不過有任何建議我們會非常感激）</p>
       <div class="input-group">
@@ -43,7 +49,7 @@
           v-model="textarea"
           class="form-control"
           aria-label="With textarea"
-          style="height: 50vh"
+          style="height: 30vh"
         ></textarea>
       </div>
     </div>
@@ -93,10 +99,10 @@ export default {
         "我覺得 AI 陪伴聊天 的介面是清楚且容易理解。",
         "我操作 AI 陪伴聊天 不用花很多精神心力。",
         "我認為 AI 陪伴聊天 的操作很容易上手。",
-        "我可以很容易的利用 AI 陪伴聊天 排解孤獨。",
-        "我可以很容易的利用 AI 陪伴聊天 社交。",
-        "我可以很容易的利用 AI 陪伴聊天 紓解壓力。",
-        "我可以很容易的利用 AI 陪伴聊天 娛樂。",
+        "我可以很容易的利用 AI 陪伴聊天排解孤獨。",
+        "我可以很容易的利用 AI 陪伴聊天社交。",
+        "我可以很容易的利用 AI 陪伴聊天紓解壓力。",
+        "我可以很容易的利用 AI 陪伴聊天娛樂。",
       ],
       submitted: false,
       lock: false,
@@ -125,7 +131,7 @@ export default {
     },
     next() {
       this.$router.push({
-        path: "/final/final",
+        path: "/final/sus",
         query: { ...this.$route.query },
       });
     },

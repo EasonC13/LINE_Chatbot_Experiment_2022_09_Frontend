@@ -3,9 +3,7 @@
     <div class="">
       <h3>最終資料收集</h3>
       <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus quas
-        eligendi non illum ad quos provident mollitia deleniti sequi numquam,
-        velit eum magnam doloribus molestiae aut quam in suscipit amet!
+        在此階段我們會收取您對本實驗的心得，並且向您詢問基本個人資料及銀行帳號，用於發送實驗報酬。
       </p>
       <div class="text-center">
         <button @click="next" class="btn btn-primary mt-3">開始</button>
@@ -29,7 +27,7 @@ export default {
         return;
       }
       this.$router.push({
-        path: "/final/sus",
+        path: "/final/tam",
         query: { ...this.$route.query },
       });
     },

@@ -73,7 +73,7 @@
         class="text-secondary mt-3"
         v-if="!(selected != 0 && textarea.length != 0)"
       >
-        需先選擇好感度並輸入感覺，才能繼續
+        需先選擇好感度才能繼續
       </p>
     </div>
   </div>

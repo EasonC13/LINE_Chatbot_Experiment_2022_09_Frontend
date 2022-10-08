@@ -1,7 +1,7 @@
 <template lang="">
   <div class="">
-    <h3 class="mx-2 mt-3">AI 陪聊的使用體驗調查表</h3>
-    <p class="mx-2 text-secondary">距離實驗結束還有一份問卷</p>
+    <h3 class="mx-2 mt-3">對於實驗過程的使用體驗調查表</h3>
+    <p class="mx-2 text-secondary">此為本實驗最後一份問卷</p>
     <p class="mt-1 mx-2 h6">對於下列敘述，請問您的同意程度？</p>
     <div
       class="my-3 mx-2"
@@ -33,32 +33,16 @@
         </button>
       </div>
     </div>
+
     <div class="mx-2">
-      以下非必填，字數不限，不過有任何文字回饋我們會非常感激
-      <p class="mb-0 mt-3">請問您與 AI 聊天機器人互動的感覺？</p>
-      <p></p>
+      <p class="mb-0 mt-3">對本次實驗有任何建議嗎？</p>
       <div class="input-group">
         <textarea
-          v-model="feeling"
+          v-model="suggestion"
           class="form-control"
           aria-label="With textarea"
-          placeholder="請輸入您的感受"
+          placeholder="請輸入您的建議"
           style="height: 50vh"
-        ></textarea>
-      </div>
-    </div>
-    <div class="mx-2">
-      <p class="mb-0 mt-3">
-        請問您覺得 AI 陪聊能用在什麼地方？另外，目前我們即將使用陪聊 AI
-        陪伴高齡者，對此請問您有什麼想法嗎？
-      </p>
-      <div class="input-group">
-        <textarea
-          v-model="vision"
-          class="form-control"
-          aria-label="With textarea"
-          placeholder="請輸入您的想像"
-          style="height: 30vh"
         ></textarea>
       </div>
     </div>
@@ -82,21 +66,20 @@ export default {
       selected: Array(10).fill(1),
       range: [1, 2, 3, 4, 5],
       sus: [
-        "我想我會願意經常使用 AI 陪聊。",
-        "我覺得 AI 陪聊過於複雜。",
-        "我認為 AI 陪聊很容易使用。",
-        "我想我需要有人幫助才能使用 AI 陪聊。",
-        "我覺得 AI 陪聊的功能整合得很好。",
-        "我覺得 AI 陪聊有太多不一致的地方。",
-        "我可以想像大部份的人很快就可以學會使用 AI 陪聊。",
-        "我覺得 AI 陪聊使用起來很麻煩。",
-        "我很有自信能使用 AI 陪聊。",
-        "我需要學會很多額外的資訊，才能使用 AI 陪聊。",
+        "我想我會願意再次參與類似實驗。",
+        "我覺得本次實驗過於複雜。",
+        "我認為本次實驗很容易使用。",
+        "我想我需要有人幫助才能使用本次實驗。",
+        "我覺得本次實驗的功能整合得很好。",
+        "我覺得本次實驗有太多不一致的地方。",
+        "我可以想像大部份的人很快就可以學會使用本次實驗。",
+        "我覺得本次實驗使用起來很麻煩。",
+        "我很有自信能使用本次實驗。",
+        "我需要學會很多額外的資訊，才能使用本次實驗。",
       ],
       submitted: false,
       lock: false,
-      feeling: "",
-      vision: "",
+      suggestion: "",
     };
   },
   computed: {
@@ -112,17 +95,16 @@ export default {
     },
 
     async submit() {
-      await this.$axios.$post("/api/v1/final/sus", {
+      await this.$axios.$post("/api/v1/final/exp_sus", {
         userId: this.$route.query.id,
         sus: JSON.stringify(this.selected),
-        feeling: this.feeling,
-        vision: this.vision,
+        suggestion: this.suggestion,
       });
       this.next();
     },
     next() {
       this.$router.push({
-        path: "/final/exp_sus",
+        path: "/final/final",
         query: { ...this.$route.query },
       });
     },

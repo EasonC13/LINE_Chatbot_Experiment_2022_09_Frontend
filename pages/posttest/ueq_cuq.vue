@@ -47,7 +47,7 @@
       </div>
     </div>
     <hr></hr>
-    <p class="mt-1 mx-2 h6">對於下列敘述，請問您的同意程度？</p>
+    <p class="mt-1 mx-2 h6">關於您的聊天對象 {{bots[current_index].name}}，對於下列敘述，請問您的同意程度？</p>
     <div
       class="my-3 mx-2"
       v-for="(question, q_num) in cuq"
@@ -145,7 +145,9 @@ export default {
     },
     form_finish() {
       let res = this.selected.filter((x) => x == 0);
-      return res.length == 0;
+      let res2 = this.cuq_selected.filter((x) => x == 0);
+
+      return res.length == 0 && res2.length == 0;
     },
   },
   async beforeMount() {
@@ -215,7 +217,7 @@ export default {
     },
     reinit() {
       this.selected = Array(this.ueq.length).fill(1);
-      this.cuq_selected = Array(this.ueq.length).fill(1);
+      this.cuq_selected = Array(this.cuq.length).fill(1);
       this.loading = true;
       let vue = this;
       setTimeout(() => {

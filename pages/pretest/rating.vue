@@ -1,16 +1,20 @@
 <template lang="">
   <div class="mx-2" v-if="bots.length != 0 && !loading">
     <h3>好感度評估前測</h3>
-    <p>請問對此聊天對象，你的好感分數？{{condition}}</p>
-    <p>名字：{{bots[current_index].name}}</p>
-    <p>圖片：<img :src="bots[current_index].img_url"></img></p>
+    <p>關於此聊天對象</p>
+    <p>
+      <img :src="bots[current_index].img_url" class="mx-3 w-25 h-25" />{{
+        bots[current_index].name
+      }}
+    </p>
+    <p>請問您的好感分數？</p>
     <div class="text-center">
       <button
         class="btn"
         type="button"
         :class="{
           'btn-primary': selected == index + 1,
-          'btn-outline-dark': !(selected == index + 1)
+          'btn-outline-dark': !(selected == index + 1),
         }"
         @click="select(index + 1)"
         v-for="(text, index) in range"
@@ -21,8 +25,20 @@
     </div>
 
     <div class="text-center my-2" v-if="selected != 0">
-      <button @click="previous" v-if="current_index!=0" class="btn btn-secondary">上一位</button>
-      <button @click="submit" class="btn btn-primary" v-if="current_index+1!=bots.length">下一位</button>
+      <button
+        @click="previous"
+        v-if="current_index != 0"
+        class="btn btn-secondary"
+      >
+        上一位
+      </button>
+      <button
+        @click="submit"
+        class="btn btn-primary"
+        v-if="current_index + 1 != bots.length"
+      >
+        下一位
+      </button>
       <button @click="submit" class="btn btn-primary" v-else>完成</button>
     </div>
   </div>
@@ -51,7 +67,7 @@ export default {
       range: [1, 2, 3, 4, 5, 6, 7],
       ratings: {},
       submitted: false,
-      lock: false
+      lock: false,
     };
   },
   computed: {
@@ -95,51 +111,48 @@ export default {
       };
     },
     async submit() {
-      if(this.lock){
-        return 0
-      }else{
-        this.lock = true
-        if (this.selected == 0) {
-        alert("請選擇一個最適合的好感度，再點選繼續");
+      if (this.lock) {
+        return 0;
       } else {
-        this.save_current();
-        if(this.current_index+1 == this.bots.length){
-          if(!this.submitted){
-            this.submitted = true
+        this.lock = true;
+        if (this.selected == 0) {
+          alert("請選擇一個最適合的好感度，再點選繼續");
+        } else {
+          this.save_current();
+          if (this.current_index + 1 == this.bots.length) {
+            if (!this.submitted) {
+              this.submitted = true;
               await this.$axios.$post("/api/v1/pretest/ratings", {
-              userId: this.$route.query.id,
-              condition: this.condition,
-              status: this.$route.query.test,
-              ratings: JSON.stringify(this.ratings)
-            });
-            this.$router.push({
-              path: "/pretest/finish",
-              query: { ...this.$route.query },
-            });
-          }
-
-        }else{
-          this.current_index++;
-          this.reinit();
-          let item = this.ratings[this.current_index];
-          if (item) {
-            this.selected = item.rating;
-            this.textarea = item.comment;
+                userId: this.$route.query.id,
+                condition: this.condition,
+                status: this.$route.query.test,
+                ratings: JSON.stringify(this.ratings),
+              });
+              this.$router.push({
+                path: "/pretest/finish",
+                query: { ...this.$route.query },
+              });
+            }
+          } else {
+            this.current_index++;
+            this.reinit();
+            let item = this.ratings[this.current_index];
+            if (item) {
+              this.selected = item.rating;
+              this.textarea = item.comment;
+            }
           }
         }
+        this.lock = false;
       }
-      this.lock = false
-      }
-
-
     },
-    reinit(){
+    reinit() {
       this.selected = 0;
       this.loading = true;
       let vue = this;
       setTimeout(() => {
-        vue.loading = false
-      }, 10)
+        vue.loading = false;
+      }, 10);
     },
     next() {
       this.$router.push({
@@ -157,14 +170,14 @@ export default {
   /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06); */
 }
 img {
-     position: relative;
-     width: 200px;
-     height: 200px;
-     overflow: hidden;
-     border-radius: 50%;
+  position: relative;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 50%;
 }
 .circular--portrait img {
-     width: 100%;
-     height: auto;
+  width: 100%;
+  height: auto;
 }
 </style>

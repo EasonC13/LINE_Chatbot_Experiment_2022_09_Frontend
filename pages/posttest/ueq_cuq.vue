@@ -127,12 +127,12 @@ export default {
       loading: false,
       current_index: 0,
       bots: [],
-      selected: Array(ueq.length).fill(1),
+      selected: Array(ueq.length).fill(0),
       range: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       ueq: ueq,
       all_rating: {},
       cuq: cuq,
-      cuq_selected: Array(cuq.length).fill(1),
+      cuq_selected: Array(cuq.length).fill(0),
       cuq_range: [1, 2, 3, 4, 5],
       submitted: false,
       lock: false,
@@ -216,8 +216,8 @@ export default {
       }
     },
     reinit() {
-      this.selected = Array(this.ueq.length).fill(1);
-      this.cuq_selected = Array(this.cuq.length).fill(1);
+      this.selected = Array(this.ueq.length).fill(0);
+      this.cuq_selected = Array(this.cuq.length).fill(0);
       this.loading = true;
       let vue = this;
       setTimeout(() => {

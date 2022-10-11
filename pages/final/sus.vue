@@ -79,7 +79,7 @@ export default {
   watch: {},
   data() {
     return {
-      selected: Array(10).fill(1),
+      selected: Array(10).fill(0),
       range: [1, 2, 3, 4, 5],
       sus: [
         "我想我會願意經常使用 AI 陪聊。",

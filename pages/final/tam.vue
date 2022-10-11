@@ -74,7 +74,7 @@ export default {
   watch: {},
   data() {
     return {
-      selected: Array(26).fill(1),
+      selected: Array(26).fill(0),
       range: [1, 2, 3, 4, 5, 6, 7],
       questions: [
         "我有使用 AI 陪伴聊天的意願。",

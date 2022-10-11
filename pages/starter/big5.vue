@@ -68,7 +68,7 @@ export default {
       loading: false,
       current_index: 0,
       bots: [],
-      selected: Array(big5.length).fill(1),
+      selected: Array(big5.length).fill(0),
       range: [1, 2, 3, 4, 5],
       big5: big5,
       submitted: false,

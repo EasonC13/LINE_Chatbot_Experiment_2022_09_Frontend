@@ -114,7 +114,7 @@ export default {
   },
   async beforeMount() {
     this.bots = await this.$axios.$get(
-      `/api/v1/posttest/bots?condition=${this.condition}`
+      `/api/v1/general/bots?condition=${this.condition}`
     );
   },
   methods: {

@@ -2,14 +2,25 @@
   <div class="">
     <div class="mx-2 mt-3">
       <h3>人格測驗</h3>
-      <p>請選擇符合您個性的描述</p>
+      <p>
+        請選擇對下方人格特質的是否適用於您，舉例來說，如果題目是「喜歡與人相處」，請選擇您是否同意「自己是一個喜歡與人相處的人」。
+      </p>
+      <p>分數代表意義如下：</p>
+      <ol>
+        <li>非常不同意</li>
+        <li>稍微不同意</li>
+        <li>普通（中立）</li>
+        <li>稍微同意</li>
+        <li>非常同意</li>
+      </ol>
     </div>
+
     <div
       class="my-3 mx-2"
       v-for="(question, q_num) in big5"
       :key="`big5_${q_num}`"
     >
-      <p class="h5">{{ question }}</p>
+      <p class="h5">{{ q_num + 1 }}. {{ question }}</p>
       <div class="clearfix mb-0">
         <span class="float-left text-secondary">非常不同意</span>
         <span class="float-right text-secondary">非常同意</span>

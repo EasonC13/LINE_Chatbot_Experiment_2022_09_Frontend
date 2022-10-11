@@ -16,6 +16,37 @@
       ></ChatHistory>
     </div>
 
+    <div class="mt-1 mx-2">
+      <p class="h6">根據聊天記錄，請問您對他的感覺？</p>
+      <p>(1-10分)</p>
+    </div>
+
+    <div class="my-3" v-for="(question, q_num) in ueq" :key="q_num">
+      <div class="mx-2 clearfix mb-0">
+        <span class="float-left">{{ question.left }}</span>
+        <span class="float-right">{{ question.right }}</span>
+        <div class="text-center"></div>
+      </div>
+
+      <div class="text-center">
+        <button
+          class="btn"
+          type="button"
+          :class="{
+            'btn-primary': selected[q_num] == index + 1,
+            'btn-outline-dark': !(selected[q_num] == index + 1),
+            'px-0': true,
+          }"
+          style="width: 9vw"
+          @click="select(q_num, num)"
+          v-for="(num, index) in range"
+          :key="index"
+        >
+          {{ num }}
+        </button>
+      </div>
+    </div>
+    <hr></hr>
     <p class="mt-1 mx-2 h6">對於下列敘述，請問您的同意程度？</p>
     <div
       class="my-3 mx-2"
@@ -42,33 +73,6 @@
           @click="select_cuq(q_num, num)"
           v-for="(num, index) in cuq_range"
           :key="`cuq_${index}`"
-        >
-          {{ num }}
-        </button>
-      </div>
-    </div>
-
-    <p class="mt-1 mx-2 h6">根據聊天記錄，請問您對他的感覺？</p>
-    <div class="my-3" v-for="(question, q_num) in ueq" :key="q_num">
-      <div class="mx-2 clearfix mb-0">
-        <span class="float-left">{{ question.left }}</span>
-        <span class="float-right">{{ question.right }}</span>
-        <div class="text-center"></div>
-      </div>
-
-      <div class="text-center">
-        <button
-          class="btn"
-          type="button"
-          :class="{
-            'btn-primary': selected[q_num] == index + 1,
-            'btn-outline-dark': !(selected[q_num] == index + 1),
-            'px-0': true,
-          }"
-          style="width: 9vw"
-          @click="select(q_num, num)"
-          v-for="(num, index) in range"
-          :key="index"
         >
           {{ num }}
         </button>

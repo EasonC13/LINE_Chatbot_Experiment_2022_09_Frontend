@@ -56,7 +56,7 @@
       <p>*請確認銀行帳號正確無誤，這樣受試者報酬才能順利匯入</p>
       <br></br>
       <div class="form-group">
-        <label for="exampleFormControlTextarea1">任何想說的話、備註</label>
+        <label for="exampleFormControlTextarea1">備註（如無請留白）</label>
         <textarea
           class="form-control"
           id="exampleFormControlTextarea1"

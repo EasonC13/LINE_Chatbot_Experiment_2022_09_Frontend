@@ -104,7 +104,7 @@ export default {
     },
     next() {
       this.$router.push({
-        path: "/final/finish",
+        path: "/final/explain",
         query: { ...this.$route.query },
       });
     },

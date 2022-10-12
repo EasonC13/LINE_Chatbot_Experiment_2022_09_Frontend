@@ -18,7 +18,7 @@
 
     <div class="mt-1 mx-2">
       <p class="h6">根據聊天記錄，請問您覺得 {{bots[current_index].name}} 是個什麼樣的人？</p>
-      <p>(1-10分)</p>
+      <p>(1 - 10分)</p>
     </div>
 
     <div class="my-3" v-for="(question, q_num) in ueq" :key="q_num">

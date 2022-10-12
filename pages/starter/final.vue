@@ -21,7 +21,6 @@
         >
           <option>男</option>
           <option>女</option>
-          <option>不願透露</option>
         </select>
       </div>
       <div class="form-group">

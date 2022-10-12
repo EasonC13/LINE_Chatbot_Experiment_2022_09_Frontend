@@ -36,6 +36,7 @@
         <li>
           關於聊天話題的選擇，基本上沒有限制。我們使用的是最先進的聊天引擎，會根據你的發言做出反應，可以陪你天南地北的聊任何話題。
         </li>
+        <li>只能使用純文字訊息，無法接收貼圖、表情符號。</li>
       </ol>
       <div class="text-center mb-3">
         <button @click="next" class="btn btn-primary">關閉視窗</button>

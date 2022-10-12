@@ -21,11 +21,10 @@
 
     <p>請問您對本實驗的後續有興趣嗎？想不想收到後續消息？</p>
     <div @click.prevent="check">
-      <input type="checkbox" v-model="checked"
-    ></input>我想收到後續消息，請把後續的實驗、發表、論文資訊寄給我（不會發廣告）
+      <input type="checkbox" v-model="checked"></input>我想收到後續消息，請把後續的實驗、發表、論文資訊寄給我（不會發廣告）
     </div>
     <div class="mx-2">
-      <p class="mb-0 mt-3">看完事後解釋後，您對本次實驗有任何想法或問題嗎？（回應將統一由後續消息於電子郵件發出，記得勾選上方才能收到）</p>
+      <p class="mb-0 mt-3 mb-1">看完事後解釋後，您對本次實驗有任何想法或問題嗎？（回應將統一由後續消息於電子郵件發出，記得勾選上方才能收到）</p>
       <div class="input-group">
         <textarea
           v-model="questions"
@@ -38,7 +37,7 @@
     </div>
 
     <div class="text-center my-2">
-      <button @click="submit" class="btn btn-primary">下一步</button>
+      <button @click="submit" class="btn btn-primary">結束實驗</button>
     </div>
   </div>
 </template>

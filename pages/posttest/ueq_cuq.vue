@@ -127,6 +127,8 @@ export default {
       loading: false,
       current_index: 0,
       bots: [],
+      cost_time: Array(5).fill(0),
+      current_start_time: 0,
       selected: Array(ueq.length).fill(0),
       range: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       ueq: ueq,
@@ -159,6 +161,9 @@ export default {
       }
     );
   },
+  mounted(){
+    this.current_start_time = performance.now()
+  },
   methods: {
     select(q_num, i) {
       this.selected[q_num] = i;
@@ -177,6 +182,8 @@ export default {
       this.cuq_selected = item.cuq_rating;
     },
     save_current() {
+      let time_cost = (performance.now() - this.current_start_time) / 1000
+      this.cost_time[this.current_index] += time_cost
       this.all_rating[this.current_index] = {
         id: this.bots[this.current_index].id,
         name: this.bots[this.current_index].name,
@@ -199,6 +206,7 @@ export default {
               condition: this.condition,
               status: this.$route.query.test,
               all_rating: JSON.stringify(this.all_rating),
+              cost_time: JSON.stringify(this.cost_time),
             });
             this.next();
           }
@@ -222,6 +230,7 @@ export default {
       let vue = this;
       setTimeout(() => {
         vue.loading = false;
+        vue.current_start_time = performance.now()
       }, 10);
     },
     next() {

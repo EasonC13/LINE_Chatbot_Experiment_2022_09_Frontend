@@ -100,6 +100,8 @@ export default {
       bots: [],
       selected: 0,
       range: [1, 2, 3, 4, 5, 6, 7],
+      cost_time: Array(5).fill(0),
+      current_start_time: 0,
       ratings: {},
       submitted: false,
       lock: false,
@@ -116,6 +118,9 @@ export default {
     this.bots = await this.$axios.$get(
       `/api/v1/general/bots?condition=${this.condition}`
     );
+  },
+  mounted() {
+    this.current_start_time = performance.now();
   },
   methods: {
     select(i) {
@@ -134,6 +139,8 @@ export default {
       this.textarea = item.comment;
     },
     save_current() {
+      let time_cost = (performance.now() - this.current_start_time) / 1000;
+      this.cost_time[this.current_index] += time_cost;
       this.ratings[this.current_index] = {
         id: this.bots[this.current_index].id,
         name: this.bots[this.current_index].name,
@@ -159,6 +166,7 @@ export default {
                 condition: this.condition,
                 status: this.$route.query.test,
                 ratings: JSON.stringify(this.ratings),
+                cost_time: JSON.stringify(this.cost_time),
               });
               this.next();
             }
@@ -182,6 +190,7 @@ export default {
       let vue = this;
       setTimeout(() => {
         vue.loading = false;
+        vue.current_start_time = performance.now();
       }, 10);
     },
     next() {

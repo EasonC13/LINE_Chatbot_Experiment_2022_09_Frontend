@@ -27,15 +27,23 @@
 //   { left: "保守的", right: "創新的" },
 // ];
 
+// let ueq = [
+//   { left: "礙手礙腳的", right: "能提供輔助的" },
+//   { left: "複雜的", right: "簡單的" },
+//   { left: "低效的", right: "高效的" },
+//   { left: "令人眼花繚亂的", right: "一目了然的" },
+//   { left: "乏味的", right: "帶勁的" },
+//   { left: "無趣的", right: "有趣的" },
+//   { left: "常規的", right: "獨創的" },
+//   { left: "傳統的", right: "新穎的" },
+// ];
+
 let ueq = [
-  { left: "礙手礙腳的", right: "能提供輔助的" },
-  { left: "複雜的", right: "簡單的" },
-  { left: "低效的", right: "高效的" },
-  { left: "令人眼花繚亂的", right: "一目了然的" },
-  { left: "乏味的", right: "帶勁的" },
-  { left: "無趣的", right: "有趣的" },
-  { left: "常規的", right: "獨創的" },
-  { left: "傳統的", right: "新穎的" },
+  { left: "內向的", right: "外向的" },
+  { left: "惹人厭的", right: "好相處的" },
+  { left: "保守的", right: "創新的" },
+  { left: "不負責任的", right: "有責任感的" },
+  { left: "平靜的", right: "神經質的" },
 ];
 
 export default ueq;

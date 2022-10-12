@@ -2,6 +2,9 @@
   <div class="mx-2" v-if="bots.length != 0 && !loading">
     <h3>好感度評估前測</h3>
     <p>關於此聊天對象</p>
+    <div class='dummy_bots' v-for="(bot, index) in bots" :key="'dummy_bots_' + index" v-show="false">
+      <img :src="bot.img_url"></img>
+    </div>
     <p>
       <img :src="bots[current_index].img_url" class="mx-3 w-25 h-25" />{{
         bots[current_index].name

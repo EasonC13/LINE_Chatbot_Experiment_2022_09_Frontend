@@ -1,5 +1,8 @@
 <template lang="">
   <div class="mx-2" v-if="bots.length != 0 && !loading">
+    <div class='dummy_bots' v-for="(bot, index) in bots" :key="'dummy_bots_' + index" v-show="false">
+      <img :src="bot.img_url"></img>
+    </div>
     <h3>好感度評估後測</h3>
     <div class="pb-4">
       <p>關於此聊天對象</p>

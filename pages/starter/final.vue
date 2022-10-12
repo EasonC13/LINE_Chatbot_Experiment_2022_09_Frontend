@@ -3,7 +3,7 @@
     <h3>個人資料收集</h3>
     <form>
       <div class="form-group">
-        <label for="exampleFormControlInput1">請問您的信箱</label>
+        <label for="exampleFormControlInput1">請問您的信箱（用於發送轉帳通知）</label>
         <input
           type="email"
           class="form-control"
@@ -71,7 +71,7 @@
         class="btn btn-primary"
         :disabled="!(email && gender && age && bank_id && bank_account)"
       >
-        已完成全部資料，結束實驗
+        已完成全部資料，開始實驗
       </button>
     </div>
   </div>
@@ -120,7 +120,7 @@ export default {
     },
     next() {
       this.$router.push({
-        path: "/final/finish",
+        path: "/starter/finish",
         query: { ...this.$route.query },
       });
     },

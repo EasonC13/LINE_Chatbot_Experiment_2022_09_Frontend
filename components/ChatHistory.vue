@@ -7,6 +7,7 @@
         class="btn btn-primary"
         data-toggle="modal"
         data-target="#exampleModal"
+        @click="clickChatHistoryBtn"
       >
         查看 {{ current_bot.bot_name }} 的聊天記錄
       </button>
@@ -127,6 +128,15 @@ export default {
       `/api/v1/posttest/chat_history?userId=${this.userId}&condition=${condition}`
     );
     this.history = res.chats;
+  },
+  methods: {
+    async clickChatHistoryBtn() {
+      console.log(this.userId);
+      await this.$axios.$post("/api/v1/behavior/openChatHistory", {
+        userId: this.$route.query.id,
+        botId: this.current_bot_id,
+      });
+    },
   },
 };
 </script>

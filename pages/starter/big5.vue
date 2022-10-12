@@ -98,7 +98,9 @@ export default {
         if (res.acknowledged) {
           this.next();
         } else {
-          alert("發生未知錯誤，請稍後重試或聯絡管理員");
+          alert(
+            "找不到使用者，請確保使用正確的使用者帳號。如果依循正常操作請您稍後重試"
+          );
         }
         this.lock = false;
       }

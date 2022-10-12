@@ -43,7 +43,7 @@ let ueq = [
   { left: "惹人厭的", right: "好相處的" },
   { left: "保守的", right: "創新的" },
   { left: "不負責任的", right: "有責任感的" },
-  { left: "平靜的", right: "神經質的" },
+  { left: "冷靜的", right: "神經質的" },
 ];
 
 export default ueq;

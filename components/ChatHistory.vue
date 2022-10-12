@@ -20,6 +20,7 @@
       tabindex="-1"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
+      v-on:hide.bs.modal="test"
     >
       <div class="modal-dialog">
         <div class="modal-content">
@@ -106,6 +107,7 @@ export default {
       image:
         "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp",
       history: [],
+      open_time: 0,
     };
   },
   computed: {
@@ -128,14 +130,26 @@ export default {
       `/api/v1/posttest/chat_history?userId=${this.userId}&condition=${condition}`
     );
     this.history = res.chats;
+
+    let vue = this;
+    $("#exampleModal").on("hidden.bs.modal", function (e) {
+      vue.closeChatHistory();
+    });
   },
   methods: {
     async clickChatHistoryBtn() {
-      console.log(this.userId);
+      this.open_time = performance.now();
+    },
+    async closeChatHistory() {
+      let duration = (performance.now() - this.open_time) / 1000;
       await this.$axios.$post("/api/v1/behavior/openChatHistory", {
         userId: this.$route.query.id,
         botId: this.current_bot_id,
+        duration: duration,
       });
+    },
+    test() {
+      console.log("test");
     },
   },
 };

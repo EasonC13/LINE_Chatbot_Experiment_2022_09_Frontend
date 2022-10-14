@@ -16,6 +16,7 @@
         :condition="$route.query.test"
         :userId="$route.query.id"
         :current_bot_id="bots[current_index].id"
+        :bots="bots"
       ></ChatHistory>
     </div>
     <div class="mb-3">

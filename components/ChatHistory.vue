@@ -100,7 +100,7 @@
 </template>
 <script>
 export default {
-  props: ["userId", "condition", "current_bot_id"],
+  props: ["userId", "condition", "current_bot_id", "bots"],
   data() {
     return {
       text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid velit pariatur vel rerum earum molestias nam cumque, dignissimos itaque voluptate deleniti laboriosam! Eius quia doloremque excepturi aliquid et placeat quibusdam.",
@@ -142,10 +142,13 @@ export default {
     },
     async closeChatHistory() {
       let duration = (performance.now() - this.open_time) / 1000;
+      let bot_ids = this.bots.map((x) => x.id);
       await this.$axios.$post("/api/v1/behavior/openChatHistory", {
         userId: this.$route.query.id,
         botId: this.current_bot_id,
         duration: duration,
+        bot_orders: bot_ids,
+        at_bot_order: bot_ids.indexOf(this.current_bot_id),
       });
     },
     test() {

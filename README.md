@@ -1,5 +1,7 @@
 # 2022_09_chatbot_experiment
 
+With backend: https://github.com/EasonC13/LINE_Chatbot_Experiment_2022_09/blob/main/README.md
+
 ## Build Setup
 
 ```bash
